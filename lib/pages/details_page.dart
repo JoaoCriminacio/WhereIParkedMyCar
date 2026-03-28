@@ -13,11 +13,11 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
 
-    final parking = ModalRoute.of(context)!.settings.arguments as Parking;
+    final _parking = ModalRoute.of(context)!.settings.arguments as Parking?;
 
     return Scaffold(
       appBar: _appBar(),
-      body: _body(parking),
+      body: _body(_parking),
     );
   }
 
@@ -27,11 +27,17 @@ class _DetailsPageState extends State<DetailsPage> {
     );
   }
 
-  Widget _body(Parking parking) {
+  Widget _body(Parking? parking) {
+
+    if (parking == null) {
+      return const Center(
+        child: Text("Erro ao carregar estacionamento"),
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
 
           Container(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../dao/parking_dao.dart';
+import '../model/parking.dart';
 
 class RegisterPage extends StatefulWidget {
   static const ROUTE_NAME = '/register';
@@ -10,6 +12,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
 
   final TextEditingController observacaoController = TextEditingController();
+  final _dao = ParkingDao();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Widget _body() {
-    return Padding(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
@@ -66,12 +69,41 @@ class _RegisterPageState extends State<RegisterPage> {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
+              onPressed: _save,
               child: const Text("Salvar localização"),
-              onPressed: () {},
             ),
           ),
         ],
       ),
     );
+  }
+
+  void _save() async {
+    if (observacaoController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Digite uma observação")),
+      );
+      return;
+    }
+
+    final newParking = Parking(
+      id: null,
+      observation: observacaoController.text,
+      data: DateTime.now(),
+      latitude: 0.0,
+      longitude: 0.0,
+      isActive: true
+    );
+
+    await _dao.save(newParking);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Estacionamento salvo com sucesso!"),
+        duration: Duration(seconds: 2),
+      ),
+    );
+
+    Navigator.pop(context);
   }
 }

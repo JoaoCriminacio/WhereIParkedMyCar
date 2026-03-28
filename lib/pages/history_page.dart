@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:where_i_parked_my_car/dao/parking_dao.dart';
 import '../model/parking.dart';
 import 'details_page.dart';
 
@@ -11,29 +12,8 @@ class HistoryPage extends StatefulWidget {
 
 class _HistoryPageState extends State<HistoryPage> {
 
-  final _parkings = <Parking>[
-    Parking(
-      id: 1,
-      observation: "Perto do mercado",
-      data: DateTime.now(),
-      latitude: -25.4284,
-      longitude: -49.2733,
-    ),
-    Parking(
-      id: 2,
-      observation: "Shopping",
-      data: DateTime.now(),
-      latitude: -25.4300,
-      longitude: -49.2700,
-    ),
-    Parking(
-      id: 3,
-      observation: "Faculdade",
-      data: DateTime.now(),
-      latitude: -25.4320,
-      longitude: -49.2680,
-    ),
-  ];
+  final _parkings = <Parking>[];
+  final _dao = ParkingDao();
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +21,12 @@ class _HistoryPageState extends State<HistoryPage> {
       appBar: _appBar(),
       body: _body(),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getRecords();
   }
 
   AppBar _appBar() {
@@ -66,7 +52,7 @@ class _HistoryPageState extends State<HistoryPage> {
         return ListTile(
           leading: const Icon(Icons.local_parking),
           title: Text('${parking.id} - ${parking.observation}'),
-          subtitle: Text(parking.data.toString()),
+          subtitle: Text(parking.formattedDate),
           trailing: const Icon(Icons.arrow_forward),
 
           onTap: () {
@@ -75,9 +61,19 @@ class _HistoryPageState extends State<HistoryPage> {
               DetailsPage.ROUTE_NAME,
               arguments: parking,
             );
+
+            _getRecords();
           },
         );
       },
     );
+  }
+
+  void _getRecords() async {
+    final parkings = await _dao.list();
+    setState(() {
+      _parkings.clear();
+      _parkings.addAll(parkings);
+    });
   }
 }

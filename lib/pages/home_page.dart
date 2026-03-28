@@ -47,7 +47,8 @@ class _HomePageState extends State<HomePage> {
               icon: const Icon(Icons.add_location),
               label: const Text("Salvar localização do carro"),
               onPressed: () {
-                Navigator.pushNamed(context, RegisterPage.ROUTE_NAME);
+                Navigator.pushNamed(context, RegisterPage.ROUTE_NAME)
+                    .then((_) => setState(() {}));
               },
             ),
           ),
@@ -60,7 +61,8 @@ class _HomePageState extends State<HomePage> {
               icon: const Icon(Icons.map),
               label: const Text("Ver carro estacionado"),
               onPressed: () {
-                Navigator.pushNamed(context, FindCarPage.ROUTE_NAME);
+                Navigator.pushNamed(context, FindCarPage.ROUTE_NAME)
+                    .then((_) => setState(() {}));
               },
             ),
           ),

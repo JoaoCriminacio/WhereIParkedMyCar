@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:where_i_parked_my_car/model/parking.dart';
+import '../dao/parking_dao.dart';
 
 class FindCarPage extends StatefulWidget {
   static const ROUTE_NAME = '/car';
@@ -8,6 +10,9 @@ class FindCarPage extends StatefulWidget {
 }
 
 class _FindCarPageState extends State<FindCarPage> {
+
+  Parking? _parking = null;
+  final _dao = ParkingDao();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +28,20 @@ class _FindCarPageState extends State<FindCarPage> {
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _getLastOne();
+  }
+
   Widget _body() {
+
+    if (_parking == null) {
+      return const Center(
+        child: Text("Nenhum estacionamento ativo"),
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -51,8 +69,8 @@ class _FindCarPageState extends State<FindCarPage> {
 
           const SizedBox(height: 20),
 
-          const Text(
-            "Observação: Perto do mercado",
+          Text(
+            _parking!.observation,
             style: TextStyle(fontSize: 16),
           ),
 
@@ -66,8 +84,53 @@ class _FindCarPageState extends State<FindCarPage> {
               onPressed: () {},
             ),
           ),
+
+          const SizedBox(height: 20),
+
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              icon: const Icon(Icons.check_circle),
+              label: const Text("Finalizar"),
+              onPressed: _finish,
+            ),
+          ),
         ],
       ),
     );
+  }
+
+  void _getLastOne() async {
+    final parking = await _dao.getLastOne();
+
+    setState(() {
+      _parking = parking;
+    });
+  }
+
+  void _finish() async {
+    final confirm = await showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text("Finalizar estacionamento"),
+        content: const Text("Você já encontrou o carro?"),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text("Cancelar"),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text("Sim"),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm == true) {
+      await _dao.finish(_parking!);
+
+      Navigator.pop(context);
+    }
   }
 }
