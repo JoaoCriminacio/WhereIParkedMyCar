@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 import 'package:where_i_parked_my_car/model/parking.dart';
 import '../dao/parking_dao.dart';
 
@@ -47,12 +49,27 @@ class _FindCarPageState extends State<FindCarPage> {
       child: Column(
         children: [
 
-          Container(
+          SizedBox(
             height: 250,
             width: double.infinity,
-            color: Colors.grey[300],
-            child: const Center(
-              child: Text("Mapa com marcador do carro"),
+            child: GoogleMap(
+              mapType: MapType.normal,
+              markers: {
+                Marker(
+                  markerId: const MarkerId("carro"),
+                  position: LatLng(
+                    _parking!.latitude,
+                    _parking!.longitude,
+                  ),
+                ),
+              },
+              initialCameraPosition: CameraPosition(
+                target: LatLng(
+                  _parking!.latitude,
+                  _parking!.longitude,
+                ),
+                zoom: 17,
+              ),
             ),
           ),
 
@@ -81,7 +98,12 @@ class _FindCarPageState extends State<FindCarPage> {
             child: ElevatedButton.icon(
               icon: const Icon(Icons.navigation),
               label: const Text("Navegar até o carro"),
-              onPressed: () {},
+              onPressed: () {
+                MapsLauncher.launchCoordinates(
+                  _parking!.latitude,
+                  _parking!.longitude,
+                );
+              },
             ),
           ),
 

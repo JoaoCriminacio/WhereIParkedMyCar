@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../model/parking.dart';
 
 class DetailsPage extends StatefulWidget {
@@ -40,12 +41,27 @@ class _DetailsPageState extends State<DetailsPage> {
       child: Column(
         children: [
 
-          Container(
+          SizedBox(
             height: 200,
             width: double.infinity,
-            color: Colors.grey[300],
-            child: const Center(
-              child: Text("Mapa"),
+            child: GoogleMap(
+              mapType: MapType.normal,
+              markers: {
+                Marker(
+                  markerId: const MarkerId("parking"),
+                  position: LatLng(
+                    parking.latitude,
+                    parking.longitude,
+                  ),
+                ),
+              },
+              initialCameraPosition: CameraPosition(
+                target: LatLng(
+                  parking.latitude,
+                  parking.longitude,
+                ),
+                zoom: 17,
+              ),
             ),
           ),
 
