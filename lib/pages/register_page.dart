@@ -15,7 +15,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final TextEditingController observacaoController = TextEditingController();
   final _dao = ParkingDao();
-  GoogleMapController? _mapController;
   LatLng? _currentPosition;
 
   @override
@@ -71,9 +70,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 zoom: 17,
               ),
-              onMapCreated: (controller) {
-                _mapController = controller;
-              },
               myLocationEnabled: true,
             ),
           ),

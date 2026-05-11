@@ -37,87 +37,88 @@ class _FindCarPageState extends State<FindCarPage> {
   }
 
   Widget _body() {
-
     if (_parking == null) {
       return const Center(
         child: Text("Nenhum estacionamento ativo"),
       );
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
 
-          SizedBox(
-            height: 250,
-            width: double.infinity,
-            child: GoogleMap(
-              mapType: MapType.normal,
-              markers: {
-                Marker(
-                  markerId: const MarkerId("carro"),
-                  position: LatLng(
+            SizedBox(
+              height: 250,
+              width: double.infinity,
+              child: GoogleMap(
+                mapType: MapType.normal,
+                markers: {
+                  Marker(
+                    markerId: const MarkerId("carro"),
+                    position: LatLng(
+                      _parking!.latitude,
+                      _parking!.longitude,
+                    ),
+                  ),
+                },
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(
                     _parking!.latitude,
                     _parking!.longitude,
                   ),
+                  zoom: 17,
                 ),
-              },
-              initialCameraPosition: CameraPosition(
-                target: LatLng(
-                  _parking!.latitude,
-                  _parking!.longitude,
-                ),
-                zoom: 17,
               ),
             ),
-          ),
 
-          const SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-          Container(
-            height: 150,
-            width: double.infinity,
-            color: Colors.grey[200],
-            child: const Center(
-              child: Text("Foto do local"),
+            Container(
+              height: 150,
+              width: double.infinity,
+              color: Colors.grey[200],
+              child: const Center(
+                child: Text("Foto do local"),
+              ),
             ),
-          ),
 
-          const SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-          Text(
-            _parking!.observation,
-            style: TextStyle(fontSize: 16),
-          ),
-
-          const SizedBox(height: 20),
-
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton.icon(
-              icon: const Icon(Icons.navigation),
-              label: const Text("Navegar até o carro"),
-              onPressed: () {
-                MapsLauncher.launchCoordinates(
-                  _parking!.latitude,
-                  _parking!.longitude,
-                );
-              },
+            Text(
+              _parking!.observation,
+              style: TextStyle(fontSize: 16),
             ),
-          ),
 
-          const SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton.icon(
-              icon: const Icon(Icons.check_circle),
-              label: const Text("Finalizar"),
-              onPressed: _finish,
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                icon: const Icon(Icons.navigation),
+                label: const Text("Navegar até o carro"),
+                onPressed: () {
+                  MapsLauncher.launchCoordinates(
+                    _parking!.latitude,
+                    _parking!.longitude,
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+
+            const SizedBox(height: 20),
+
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                icon: const Icon(Icons.check_circle),
+                label: const Text("Finalizar"),
+                onPressed: _finish,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

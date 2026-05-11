@@ -29,67 +29,68 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 
   Widget _body(Parking? parking) {
-
     if (parking == null) {
       return const Center(
         child: Text("Erro ao carregar estacionamento"),
       );
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
 
-          SizedBox(
-            height: 200,
-            width: double.infinity,
-            child: GoogleMap(
-              mapType: MapType.normal,
-              markers: {
-                Marker(
-                  markerId: const MarkerId("parking"),
-                  position: LatLng(
+            SizedBox(
+              height: 200,
+              width: double.infinity,
+              child: GoogleMap(
+                mapType: MapType.normal,
+                markers: {
+                  Marker(
+                    markerId: const MarkerId("carro"),
+                    position: LatLng(
+                      parking.latitude,
+                      parking.longitude,
+                    ),
+                  ),
+                },
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(
                     parking.latitude,
                     parking.longitude,
                   ),
+                  zoom: 17,
                 ),
-              },
-              initialCameraPosition: CameraPosition(
-                target: LatLng(
-                  parking.latitude,
-                  parking.longitude,
-                ),
-                zoom: 17,
               ),
             ),
-          ),
 
-          const SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-          Container(
-            height: 200,
-            width: double.infinity,
-            color: Colors.grey[300],
-            child: const Center(
-              child: Text("Foto do local"),
+            Container(
+              height: 200,
+              width: double.infinity,
+              color: Colors.grey[300],
+              child: const Center(
+                child: Text("Foto do local"),
+              ),
             ),
-          ),
 
-          const SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-          Text(
-            "Observação: ${parking.observation}",
-            style: const TextStyle(fontSize: 18),
-          ),
+            Text(
+              "Observação: ${parking.observation}",
+              style: const TextStyle(fontSize: 18),
+            ),
 
-          const SizedBox(height: 10),
+            const SizedBox(height: 10),
 
-          Text(
-            "Data: ${parking.formattedDate}",
-            style: const TextStyle(fontSize: 16),
-          ),
-        ],
+            Text(
+              "Data: ${parking.formattedDate}",
+              style: const TextStyle(fontSize: 16),
+            ),
+          ],
+        ),
       ),
     );
   }
