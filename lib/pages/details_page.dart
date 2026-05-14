@@ -67,17 +67,6 @@ class _DetailsPageState extends State<DetailsPage> {
 
             const SizedBox(height: 20),
 
-            Container(
-              height: 200,
-              width: double.infinity,
-              color: Colors.grey[300],
-              child: const Center(
-                child: Text("Foto do local"),
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
             Text(
               "Observação: ${parking.observation}",
               style: const TextStyle(fontSize: 18),

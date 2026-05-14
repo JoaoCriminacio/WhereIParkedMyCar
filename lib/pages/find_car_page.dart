@@ -75,17 +75,6 @@ class _FindCarPageState extends State<FindCarPage> {
 
             const SizedBox(height: 20),
 
-            Container(
-              height: 150,
-              width: double.infinity,
-              color: Colors.grey[200],
-              child: const Center(
-                child: Text("Foto do local"),
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
             Text(
               _parking!.observation,
               style: TextStyle(fontSize: 16),

@@ -40,7 +40,6 @@ class ParkingDao {
         Parking.FIELD_DATA,
         Parking.FIELD_LATITUDE,
         Parking.FIELD_LONGITUDE,
-        Parking.FIELD_PHOTO_PATH,
         Parking.FIELD_IS_ACTIVE
       ],
       where: "${Parking.FIELD_IS_ACTIVE} = 1",
@@ -63,7 +62,6 @@ class ParkingDao {
         Parking.FIELD_DATA,
         Parking.FIELD_LATITUDE,
         Parking.FIELD_LONGITUDE,
-        Parking.FIELD_PHOTO_PATH,
         Parking.FIELD_IS_ACTIVE
       ],
       where: "${Parking.FIELD_IS_ACTIVE} = 0",

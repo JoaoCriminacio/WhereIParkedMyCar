@@ -39,7 +39,6 @@ class DatabaseProvider {
         ${Parking.FIELD_DATA} TEXT NOT NULL,
         ${Parking.FIELD_LATITUDE} REAL NOT NULL,
         ${Parking.FIELD_LONGITUDE} REAL NOT NULL,
-        ${Parking.FIELD_PHOTO_PATH} TEXT,
         ${Parking.FIELD_IS_ACTIVE} INTEGER NOT NULL
       );
       '''

@@ -76,17 +76,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
           const SizedBox(height: 20),
 
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton.icon(
-              icon: const Icon(Icons.camera_alt),
-              label: const Text("Tirar Foto"),
-              onPressed: () {},
-            ),
-          ),
-
-          const SizedBox(height: 20),
-
           TextField(
             controller: observacaoController,
             decoration: const InputDecoration(
